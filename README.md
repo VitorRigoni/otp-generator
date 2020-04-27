@@ -23,5 +23,8 @@ if result == userInput then
 ## Next steps
 
 - Add QR code generator
+- Make it a nuget package
+- Add project configuration
+- Add appveyor
 - Add sample
 - Tests?
