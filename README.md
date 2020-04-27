@@ -14,7 +14,7 @@ let key = getUserKey // Save this to your DB and present to the user (usually do
 
 // Verify the user input
 let userKey = "" // you got this from your DB
-let result = HOTP key
+let result = getHotp key
 if result == userInput then
   // do your thing (login successful maybe?)
 
