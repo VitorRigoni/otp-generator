@@ -19,3 +19,9 @@ if result == userInput then
   // do your thing (login successful maybe?)
 
 ```
+
+## Next steps
+
+- Add QR code generator
+- Add sample
+- Tests?
