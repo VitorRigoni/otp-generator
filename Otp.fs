@@ -1,3 +1,5 @@
+namespace OtpGenerator
+
 module Otp =
 
     open System
@@ -26,11 +28,18 @@ module Otp =
         let secondsSinceEpoch = (DateTime.UtcNow - DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds
         uint64 (Math.Floor(secondsSinceEpoch / 30.0))
     
+    let private truncate v =
+        v % int (10.0 ** 6.0) |> abs
+    
     let getUserKey =
         System.Text.Encoding.ASCII.GetString generateKey
 
+    // There's still something wrong that I wasn't able to figure out...
+    // For some reason, sometimes the tests fail because the number generated
+    // is negative and this is very weird. I hacked it by abs-ing it, but this feels very wrong.
     let getHotp (key: string) =
         let hmac = createHmac
         hmac.Key <- stringToByteArray key
         hmac.ComputeHash(BitConverter.GetBytes(counterNow))
-        |> fun x -> dt x % int (10.0 ** 6.0)
+        |> dt |> truncate
+        |> sprintf "%06i"
