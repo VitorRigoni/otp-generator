@@ -25,6 +25,6 @@ if result == userInput then
 - Add QR code generator
 - Make it a nuget package
 - Add project configuration
-- Add appveyor
+- Add ~appveyor~ github actions 😁
 - Add sample
 - Tests?
