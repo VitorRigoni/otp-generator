@@ -5,12 +5,12 @@ module Otp =
     open System
     open System.Security.Cryptography
 
-    let private createHmac =
+    let private createHmac () =
         new HMACSHA1()
 
     let private generateKey =
         let rng = new RNGCryptoServiceProvider()
-        let k = Array.zeroCreate (createHmac.HashSize / 8)
+        let k = Array.zeroCreate (createHmac().HashSize / 8)
         rng.GetBytes(k)
         k
 
@@ -26,7 +26,7 @@ module Otp =
 
     let private counterNow =
         let secondsSinceEpoch = (DateTime.UtcNow - DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds
-        uint64 (Math.Floor(secondsSinceEpoch / 30.0))
+        uint64 (floor(secondsSinceEpoch / 30.0))
     
     let private truncate v =
         v % int (10.0 ** 6.0) |> abs
@@ -38,7 +38,7 @@ module Otp =
     // For some reason, sometimes the tests fail because the number generated
     // is negative and this is very weird. I hacked it by abs-ing it, but this feels very wrong.
     let getHotp (key: string) =
-        let hmac = createHmac
+        let hmac = createHmac()
         hmac.Key <- stringToByteArray key
         hmac.ComputeHash(BitConverter.GetBytes(counterNow))
         |> dt |> truncate
