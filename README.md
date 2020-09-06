@@ -28,3 +28,5 @@ if result = userInput then
 - Add ~appveyor~ github actions 😁
 - Add sample
 - Tests?
+
+This is just me trying stuff out, don't use in production.
